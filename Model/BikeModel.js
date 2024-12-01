@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 
+// Define the Bike schema
 const BikeSchema = new mongoose.Schema({
-  name: { type: String }, // Ensures unique names
-  price: { type: Number },
-  imageUrl: { type: String },
-  rating: { type: Number },
+  name: { type: String, required: true, unique: true },
+  price: { type: Number, required: true },
+  imageUrl: { type: String, required: true },
+  rating: { type: Number, required: true },
   Engine: { type: String },
   PetrolCapacity: { type: Number },
   Starting: { type: String },
@@ -20,17 +21,13 @@ const BikeSchema = new mongoose.Schema({
   Width: { type: Number },
   Height: { type: Number },
   Weight: { type: Number },
+  questions: [
+    {
+      question: { type: String, required: true },
+      answer: { type: String, required: true },
+    },
+  ],
 })
 
+// Create the Bike model
 export const Bike = mongoose.model('Bike', BikeSchema)
-
-//     questions: [
-//       {
-//         question: 'What is the fuel efficiency?',
-//         answer: 'Around 60-70 km/l.',
-//       },
-//       {
-//         question: 'Is it suitable for long rides?',
-//         answer: "It's ideal for short distances and city rides.",
-//       },
-//     ],
