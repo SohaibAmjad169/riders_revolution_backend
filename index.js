@@ -7,7 +7,6 @@ import { UserRouter } from './Router/UserRouter.js'
 const app = express()
 app.use(express.json())
 app.use(cors())
-
 MongoConnect()
 app.use('/Api/Bike', BikeRouter)
 app.use('/Api/User', UserRouter)
