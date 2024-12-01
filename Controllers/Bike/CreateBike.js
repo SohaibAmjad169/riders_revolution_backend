@@ -1,48 +1,95 @@
 import { Bike } from '../../Model/BikeModel.js'
 
-export const CreateBike = async (bikeData) => {
+export const CreateBike = async (req, res) => {
+  const { bikeData } = req.body
+
   try {
     // Step 1: Validate required fields
     const requiredFields = ['name', 'price', 'imageUrl', 'rating']
     for (const field of requiredFields) {
       if (!bikeData[field]) {
-        throw new Error(`${field} is required.`)
+        return res.status(400).json({ error: `${field} is required.` })
       }
     }
 
-    // Step 2: Check for valid data types (simple validation)
-    if (typeof bikeData.name !== 'string') {
-      throw new Error('Name must be a string.')
+    // Step 2: Check for valid data types
+    if (typeof bikeData.name !== 'string' || bikeData.name.trim() === '') {
+      return res.status(400).json({ error: 'Name must be a non-empty string.' })
     }
-    if (typeof bikeData.price !== 'number') {
-      throw new Error('Price must be a number.')
+    if (typeof bikeData.price !== 'number' || bikeData.price <= 0) {
+      return res.status(400).json({ error: 'Price must be a positive number.' })
     }
-    if (typeof bikeData.imageUrl !== 'string') {
-      throw new Error('Image URL must be a string.')
+    if (
+      typeof bikeData.imageUrl !== 'string' ||
+      !bikeData.imageUrl.startsWith('http')
+    ) {
+      return res
+        .status(400)
+        .json({ error: 'Image URL must be a valid URL starting with "http".' })
     }
     if (
       typeof bikeData.rating !== 'number' ||
       bikeData.rating < 0 ||
       bikeData.rating > 5
     ) {
-      throw new Error('Rating must be a number between 0 and 5.')
+      return res
+        .status(400)
+        .json({ error: 'Rating must be a number between 0 and 5.' })
     }
 
-    // Step 3: Create a new bike instance
+    // Step 3: Optional fields validation (if present)
+    if (bikeData.questions && !Array.isArray(bikeData.questions)) {
+      return res
+        .status(400)
+        .json({ error: 'Questions must be an array of objects.' })
+    }
+    if (bikeData.questions) {
+      for (const question of bikeData.questions) {
+        if (!question.question || !question.answer) {
+          return res
+            .status(400)
+            .json({
+              error:
+                'Each question must have both "question" and "answer" fields.',
+            })
+        }
+      }
+    }
+
+    // Step 4: Check for duplicate names
+    const existingBike = await Bike.findOne({ name: bikeData.name })
+    if (existingBike) {
+      return res
+        .status(409)
+        .json({ error: 'Bike with this name already exists.' })
+    }
+
+    // Step 5: Create a new bike instance
     const bike = new Bike(bikeData)
 
-    // Step 4: Save the bike to the database
+    // Step 6: Save the bike to the database
     const savedBike = await bike.save()
 
-    // Step 5: Return the saved bike data
-    return { message: 'Bike created successfully', bike: savedBike }
+    // Step 7: Return the saved bike data
+    return res.status(201).json({
+      message: 'Bike created successfully.',
+      bike: savedBike,
+    })
   } catch (error) {
-    // Step 6: Error handling
+    // Step 8: Error handling
     console.error('Error creating bike:', error.message)
-    if (error.code === 11000) {
-      // Duplicate key error (unique constraint violation)
-      return { error: 'Bike with this name already exists.' }
+
+    // Handle Mongoose validation errors
+    if (error.name === 'ValidationError') {
+      const errorMessages = Object.values(error.errors).map(
+        (err) => err.message
+      )
+      return res.status(400).json({ error: errorMessages.join(', ') })
     }
-    return { error: error.message }
+
+    // General server error
+    return res
+      .status(500)
+      .json({ error: 'Internal server error. Please try again later.' })
   }
 }
