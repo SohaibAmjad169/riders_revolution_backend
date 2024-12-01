@@ -1,8 +1,6 @@
 import { User } from '../../Model/UserModal.js'
-
 export const GetUser = async (req, res) => {
   const { Email } = req.query
-
   try {
     const UserExists = await User.findOne({ Email })
     if (UserExists) {

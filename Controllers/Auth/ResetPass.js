@@ -1,12 +1,10 @@
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { Auth } from '../../Config/FireBaseConfig.js'
-
 export const ResetPass = async (req, res) => {
   const { Email } = req.body // Extract the email from the request body
   try {
     // Send password reset email using Firebase Auth
     await sendPasswordResetEmail(Auth, Email)
-
     // If successful, send a 200 response
     return res.status(200).json({
       message: 'Password reset email sent successfully',

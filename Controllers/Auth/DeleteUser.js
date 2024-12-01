@@ -1,8 +1,6 @@
 import { User } from '../../Model/UserModal.js'
-
 export const DeleteUser = async (req, res) => {
   const { Email } = req.query // Assume Email is passed as a query parameter
-
   try {
     // Find the user by email and delete
     const deletedUser = await User.findOneAndDelete({ Email })

@@ -3,15 +3,12 @@ import { User } from '../../Model/UserModal.js'
 import { Auth } from '../../Config/FireBaseConfig.js'
 export const Login = async (req, res) => {
   const { Email, Password } = req.body
-
   try {
     // Sign in with Firebase Authentication
     const UserData = await signInWithEmailAndPassword(Auth, Email, Password)
-
     // If Firebase login is successful, search for the user in MongoDB
     if (UserData.user) {
       const UserFound = await User.findOne({ Email })
-
       // If user is found in MongoDB, return user details
       if (UserFound) {
         return res.status(200).json(UserFound)
