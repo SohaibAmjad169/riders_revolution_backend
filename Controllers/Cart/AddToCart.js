@@ -2,20 +2,16 @@ import { Bike } from '../../Model/BikeModel.js'
 import { Cart } from '../../Model/CartSchema.js'
 export const addBikeToCart = async (req, res) => {
   const { userId, bikeId, quantity } = req.body
-
   try {
     // Find the bike by ID
     const bike = await Bike.findById(bikeId)
     if (!bike) {
       return res.status(404).json({ error: 'Bike not found.' })
     }
-
     // Calculate the price of the bike based on quantity
     const totalPrice = bike.price * quantity
-
     // Check if the user already has a cart
     let cart = await Cart.findOne({ userId })
-
     if (!cart) {
       // If no cart, create a new one
       cart = new Cart({
@@ -37,7 +33,6 @@ export const addBikeToCart = async (req, res) => {
       const existingBikeIndex = cart.bikes.findIndex(
         (b) => b.bikeId.toString() === bikeId
       )
-
       if (existingBikeIndex >= 0) {
         // Update the bike quantity and total price
         cart.bikes[existingBikeIndex].quantity += quantity
@@ -56,10 +51,8 @@ export const addBikeToCart = async (req, res) => {
         cart.totalProducts += quantity
       }
     }
-
     // Save the updated cart
     await cart.save()
-
     return res
       .status(200)
       .json({ message: 'Bike added to cart successfully', cart })
