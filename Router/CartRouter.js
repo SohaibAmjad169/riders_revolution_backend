@@ -5,5 +5,5 @@ import { getCartByUserId } from '../Controllers/Cart/GetCart.js'
 
 export const CartRouter = Router()
 CartRouter.post('/AddToCart', addBikeToCart)
-CartRouter.delete('/RemoveAItem', removeBikeFromCart)
+CartRouter.post('/RemoveAItem', removeBikeFromCart)
 CartRouter.get('/UserCart', getCartByUserId)
