@@ -17,11 +17,7 @@ const OrderSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  Cart: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Cart',
-    required: true,
-  },
+  Cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart', required: true },
   Progress: {
     type: String,
     enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
@@ -44,7 +40,7 @@ const OrderSchema = new mongoose.Schema({
   },
   PaymentMethod: {
     type: String,
-    enum: ['Credit Card', 'Bank Transfer', 'Cash on Delivery'],
+    enum: ['Credit Card', 'Bank Transfer', 'Cash On Delivery'],
     required: true,
   },
   PaymentStatus: {
