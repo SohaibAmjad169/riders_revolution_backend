@@ -10,7 +10,6 @@ export const addBikeToCart = async (req, res) => {
     if (!bike) {
       return res.status(404).json({ error: 'Bike not found.' })
     }
-    // Calculate the price of the bike based on quantity
 
     // Calculate the price of the bike based on the given quantity
     const totalPrice = bike.price * quantity
