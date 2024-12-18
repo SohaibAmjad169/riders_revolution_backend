@@ -1,6 +1,6 @@
 import { Cart } from '../../Model/CartSchema.js'
 export const getCartByUserId = async (req, res) => {
-  const { userId } = req.body
+  const { userId } = req.query
   try {
     // Find the user's cart
     const cart = await Cart.findOne({ userId }).populate('bikes.bikeId')
