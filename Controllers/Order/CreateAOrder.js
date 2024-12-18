@@ -1,26 +1,17 @@
 import Order from '../../Model/OrderModel.js'
+
 export const createOrder = async (req, res) => {
   try {
-    const {
-      Name,
-      Email,
-      userId,
-      Cart,
-      ShippingAddress,
-      BillingAddress,
-      PaymentMethod,
-      TotalAmount,
-      Notes,
-    } = req.body
+    const { orderData } = req.body
+
     // Check for required fields
     if (
-      !Name ||
-      !Email ||
-      !userId ||
-      !Cart ||
-      !ShippingAddress ||
-      !PaymentMethod ||
-      !TotalAmount
+      !orderData.Name ||
+      !orderData.Email ||
+      !orderData.userId ||
+      !orderData.Cart ||
+      !orderData.ShippingAddress ||
+      !orderData.TotalAmount
     ) {
       return res.status(400).json({
         success: false,
@@ -28,24 +19,27 @@ export const createOrder = async (req, res) => {
           'Missing required fields. Please provide all necessary details.',
       })
     }
+
     // Create a new order
     const newOrder = new Order({
-      Name,
-      Email,
-      userId,
-      Cart,
-      ShippingAddress,
-      BillingAddress: BillingAddress || ShippingAddress, // Default BillingAddress to ShippingAddress if not provided
-      PaymentMethod,
-      TotalAmount,
-      Notes,
+      Name: orderData.Name,
+      Email: orderData.Email,
+      userId: orderData.userId,
+      Cart: orderData.Cart,
+      ShippingAddress: orderData.ShippingAddress,
+      BillingAddress: orderData.ShippingAddress, // Default BillingAddress to ShippingAddress
+      PaymentMethod: orderData.PaymentMethod || 'Cash On Delivery',
+      TotalAmount: orderData.TotalAmount,
+      Notes: orderData.Notes,
     })
+
     // Save the order to the database
     const savedOrder = await newOrder.save()
     res.status(201).json({
       success: true,
       message: 'Order created successfully.',
       order: savedOrder,
+      OrderId: savedOrder.id,
     })
   } catch (error) {
     console.error('Error creating order:', error.message)
