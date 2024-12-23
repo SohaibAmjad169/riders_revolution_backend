@@ -6,6 +6,6 @@ import { ResetPass } from '../Controllers/Auth/ResetPass.js'
 
 export const UserRouter = Router()
 UserRouter.post('/CreateUser', RegisterUser)
-UserRouter.get('/Login', Login)
+UserRouter.post('/Login', Login)
 UserRouter.post('/Signout', Signout)
 UserRouter.post('/ResetPass', ResetPass)

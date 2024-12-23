@@ -39,7 +39,7 @@ export const createOrder = async (req, res) => {
       success: true,
       message: 'Order created successfully.',
       order: savedOrder,
-      OrderId: savedOrder.id,
+      OrderId: savedOrder._id,
     })
   } catch (error) {
     console.error('Error creating order:', error.message)
