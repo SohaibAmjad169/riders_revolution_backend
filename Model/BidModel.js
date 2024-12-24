@@ -3,8 +3,6 @@ import mongoose from 'mongoose'
 // Define the Admin schema
 const BidSchema = new mongoose.Schema(
   {
-    adminName: { type: String },
-    adminEmail: { type: String, unique: true },
     bike: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Bike',
