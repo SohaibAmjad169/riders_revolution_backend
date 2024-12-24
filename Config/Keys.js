@@ -12,8 +12,12 @@ const REACT_APP_FIREBASE_APP_ID = process.env.REACT_APP_FIREBASE_APP_ID
 const REACT_APP_FIREBASE_MEASUREMENT_ID =
   process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 const Mongo_Url = process.env.Mongo_Url
+const Email = process.env.OTP_user
+const Pass = process.env.OTP_pass
 export {
   Port,
+  Email,
+  Pass,
   REACT_APP_FIREBASE_API_KEY,
   REACT_APP_FIREBASE_AUTH_DOMAIN,
   REACT_APP_FIREBASE_PROJECT_ID,
