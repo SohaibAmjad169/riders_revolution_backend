@@ -5,13 +5,13 @@ import nodemailer from 'nodemailer'
 
 export const updateBid = async (req, res) => {
   const { id } = req.query
-  const { bidStatus, bidAmount } = req.body
+  const { bidStatus } = req.body
 
   try {
     // Find and update the bid
     const updatedBid = await Bid.findByIdAndUpdate(
       id,
-      { bidStatus, bidAmount },
+      { bidStatus },
       { new: true } // Return the updated document
     )
 
