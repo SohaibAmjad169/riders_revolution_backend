@@ -39,7 +39,7 @@ export const updateBid = async (req, res) => {
       // Email content
       const mailOptions = {
         from: `"Bike Auction System" 70110719@student.uol.edu.pk`, // Replace with your email
-        to: 'gptprompts87@gmail.com',
+        to: updatedBid.userEmail,
         subject: 'Bid Status Update: Accepted',
         html: `
           <h1 style="color: green; text-align: center;">Your Bid is Accepted!</h1>
