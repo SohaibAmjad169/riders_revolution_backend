@@ -1,25 +1,25 @@
 import mongoose from 'mongoose'
 
-// Define the Admin schema
+// Define the Bid schema
 const BidSchema = new mongoose.Schema(
   {
     bike: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Bike',
-      required: true, // Reference to the Bike model
+      required: true,
     },
     userName: { type: String, required: true },
     userEmail: { type: String, required: true },
     bidStatus: {
       type: String,
-      enum: ['Pending', 'Accepted', 'Rejected'], // Define possible statuses
+      enum: ['Pending', 'Accepted', 'Rejected'],
       default: 'Pending',
     },
-    bidAmount: { type: Number, required: true }, // Bid amount for the bike
+    bidAmount: { type: Number, required: true },
     bidDate: { type: Date, default: Date.now },
   },
-  { timestamps: true } // Automatically adds createdAt and updatedAt fields
+  { timestamps: true }
 )
 
-// Create the Admin model
+// Create the Bid model
 export const Bid = mongoose.model('Bid', BidSchema)
