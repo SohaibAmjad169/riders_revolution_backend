@@ -10,9 +10,12 @@ export const GetSingleOrder = async (req, res) => {
     if (!SingleOrder) {
       return res.status(404).json({ error: 'Order not found.' })
     }
-    const GetCart = await Cart.findById(SingleOrder.Cart).populate(
-      'bikes.bikeId'
-    )
+
+    // Populate both bikes and services in the cart
+    const GetCart = await Cart.findById(SingleOrder.Cart)
+      .populate('bikes.bikeId') // Populate bike details
+      .populate('services.serviceId') // Populate service details
+
     // Return the order details along with the populated cart details
     return res.status(200).json({ Order: SingleOrder, Cart: GetCart })
   } catch (error) {
