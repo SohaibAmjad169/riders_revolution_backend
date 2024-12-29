@@ -2,7 +2,7 @@ import { Bike } from '../../Model/BikeModel.js'
 import { User } from '../../Model/UserModal.js'
 
 export const RemoveBike = async (req, res) => {
-  const { ID, Email } = req.body
+  const { ID } = req.body
 
   try {
     // Step 1: Validate input
@@ -12,17 +12,17 @@ export const RemoveBike = async (req, res) => {
         .json({ error: 'Bike ID is required to delete the bike.' })
     }
 
-    if (!Email) {
-      return res
-        .status(400)
-        .json({ error: 'Email is required to authorize deletion.' })
-    }
+    // if (!Email) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: 'Email is required to authorize deletion.' })
+    // }
 
-    // Step 2: Check if the user exists
-    const userFound = await User.findOne({ Email })
-    if (!userFound) {
-      return res.status(404).json({ error: 'User not found.' })
-    }
+    // // Step 2: Check if the user exists
+    // const userFound = await User.findOne({ Email })
+    // if (!userFound) {
+    //   return res.status(404).json({ error: 'User not found.' })
+    // }
 
     // Step 3: Check if the bike exists
     const bikeFound = await Bike.findById(ID)
