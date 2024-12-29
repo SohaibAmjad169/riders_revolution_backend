@@ -2,7 +2,7 @@ import { Bike } from '../../Model/BikeModel.js'
 import { User } from '../../Model/UserModal.js'
 
 export const RemoveBike = async (req, res) => {
-  const { ID } = req.body
+  const { ID } = req.query
 
   try {
     // Step 1: Validate input
