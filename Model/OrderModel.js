@@ -58,6 +58,32 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  bikes: [
+    {
+      bikeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bike',
+        required: true,
+      },
+      name: { type: String, required: true },
+      price: { type: Number, required: true },
+      imageUrl: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
+  services: [
+    {
+      serviceId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Service',
+        required: true,
+      },
+      name: { type: String, required: true },
+      price: { type: Number, required: true },
+      imageUrl: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -67,5 +93,6 @@ const OrderSchema = new mongoose.Schema({
     default: Date.now,
   },
 })
+
 const Order = mongoose.model('Order', OrderSchema)
 export default Order
