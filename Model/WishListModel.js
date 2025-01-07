@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 // Define the Bid schema
-const BidSchema = new mongoose.Schema(
+const wishListSchema = new mongoose.Schema(
   {
     bike: {
       type: mongoose.Schema.Types.ObjectId,
@@ -11,10 +11,13 @@ const BidSchema = new mongoose.Schema(
     userName: { type: String, required: true },
     userEmail: { type: String, required: true },
     bikeImage: { type: String, required: true },
+    bikeName: { type: String, required: true },
+    bikePrice: { type: String, required: true },
+    bikeRating: { type: String, required: true },
     timer: { type: Boolean },
   },
   { timestamps: true }
 )
 
 // Create the Bid model
-export const Wishlist = mongoose.model('wishlist', BidSchema)
+export const Wishlist = mongoose.model('wishlist', wishListSchema)
