@@ -11,5 +11,5 @@ export const BidRouter = Router();
 BidRouter.post("/createBid", createBid);
 BidRouter.get("/GetAllBids", getAllBids);
 BidRouter.get("/GetSingleBid", getBid);
-BidRouter.post("/UpdateBid", updateBid);
+BidRouter.put("/UpdateBid", updateBid);
 BidRouter.get("/GetAllBikeBids", getAllBidsByBikeId);

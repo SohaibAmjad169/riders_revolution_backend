@@ -1,5 +1,5 @@
 import { Bid } from "../../Model/BidModel.js";
-import { Bike } from "../../Model/BikeModel.js";
+import { BikeModal } from '../../Model/BikeCreateModal.js'
 
 //Create new Bid in DB
 export const createBid = async (req, res) => {
@@ -10,7 +10,7 @@ export const createBid = async (req, res) => {
   }
 
   try {
-    const bike = await Bike.findById(bikeId);
+    const bike = await BikeModal.findById(bikeId);
     if (!bike) {
       return res.status(404).json({ error: "Bike not found." });
     }
@@ -38,7 +38,7 @@ export const createBid = async (req, res) => {
 //Get all Bids
 export const getAllBids = async (req, res) => {
   try {
-    const bids = await Bid.find().populate("bike");
+    const bids = await Bid.find()
     return res.status(200).json({ bids });
   } catch (error) {
     console.error(error);
@@ -51,7 +51,7 @@ export const getAllBidsByBikeId = async (req, res) => {
   const { bike_id } = req.query;
 
   try {
-    const bids = await Bid.find({ bike: bike_id }).populate("bike");
+    const bids = await Bid.find({ bike: bike_id })
 
     if (!bids || bids.length === 0) {
       return res
@@ -71,7 +71,7 @@ export const getBid = async (req, res) => {
   const { _id } = req.query;
 
   try {
-    const bid = await Bid.findById(_id).populate("bike");
+    const bid = await Bid.findById(_id)
     if (!bid) {
       return res.status(404).json({ error: "Bid not found." });
     }

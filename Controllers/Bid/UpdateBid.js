@@ -1,6 +1,6 @@
 import { Email, Pass } from '../../Config/Keys.js'
 import { Bid } from '../../Model/BidModel.js'
-import { Bike } from '../../Model/BikeModel.js'
+import { BikeModal } from '../../Model/BikeCreateModal.js'
 import nodemailer from 'nodemailer'
 
 export const updateBid = async (req, res) => {
@@ -8,33 +8,29 @@ export const updateBid = async (req, res) => {
   const { bidStatus } = req.body
 
   try {
-    // Find and update the bid
     const updatedBid = await Bid.findByIdAndUpdate(
       id,
       { bidStatus },
-      { new: true } // Return the updated document
+      { new: true } 
     )
 
     if (!updatedBid) {
       return res.status(404).json({ error: 'Bid not found.' })
     }
 
-    // Fetch bike details if bid is accepted or rejected
-    const bike = await Bike.findById(updatedBid.bike)
+    const bike = await BikeModal.findById(updatedBid.bike)
     if (!bike) {
       return res.status(404).json({ error: 'Bike not found.' })
     }
 
-    // Configure the transporter
     const transporter = nodemailer.createTransport({
-      service: 'Gmail', // Or another email provider
+      service: 'Gmail', 
       auth: {
-        user: '70110719@student.uol.edu.pk', // Replace with your email
-        pass: 'slqc sfjt qlgw ctri', // Replace with your email password or app password
+        user: '70110719@student.uol.edu.pk', 
+        pass: 'slqc sfjt qlgw ctri', 
       },
     })
 
-    // Set email color based on the bid status
     let emailColor = ''
     let statusText = ''
     if (bidStatus === 'Accepted') {
@@ -48,9 +44,8 @@ export const updateBid = async (req, res) => {
       statusText = 'Your Bid is Pending.'
     }
 
-    // Email content with dynamic colors based on the bid status
     const mailOptions = {
-      from: `"Bike Auction System" 70110719@student.uol.edu.pk`, // Replace with your email
+      from: `"Bike Auction System" 70110719@student.uol.edu.pk`, 
       to: updatedBid.userEmail,
       subject: `Bid Status Update: ${statusText}`,
       html: `
