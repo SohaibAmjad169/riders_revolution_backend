@@ -89,7 +89,7 @@ export const startWishlistTimer = async (req, res) => {
       return res.status(400).json({ error: "Invalid bikeId format" });
     }
 
-    const updatedWishlist = await Wishlist.updateOne(
+    const updatedWishlist = await Wishlist.updateMany(
       { bike: new mongoose.Types.ObjectId(bikeId) },
       { $set: { timer: true, updatedAt: new Date() } },
       { new: true }
