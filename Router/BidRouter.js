@@ -4,6 +4,7 @@ import {
   getBid,
   getAllBids,
   getAllBidsByBikeId,
+  getAllBidsByBikeIds
 } from "../Controllers/Bid/Bid.js";
 import { updateBid } from "../Controllers/Bid/UpdateBid.js";
 
@@ -13,3 +14,5 @@ BidRouter.get("/GetAllBids", getAllBids);
 BidRouter.get("/GetSingleBid", getBid);
 BidRouter.put("/UpdateBid", updateBid);
 BidRouter.get("/GetAllBikeBids", getAllBidsByBikeId);
+BidRouter.get("/GetAllBikesBids", getAllBidsByBikeIds);
+

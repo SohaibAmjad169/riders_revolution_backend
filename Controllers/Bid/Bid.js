@@ -66,6 +66,41 @@ export const getAllBidsByBikeId = async (req, res) => {
   }
 };
 
+import mongoose from "mongoose";
+export const getAllBidsByBikeIds = async (req, res) => {
+  let { bike_ids } = req.query; 
+
+  // Check if bike_ids is a string (which is the case when it comes as a comma-separated list in the URL)
+  if (typeof bike_ids === 'string') {
+    bike_ids = bike_ids.split(','); // Split the string by commas into an array
+  }
+
+  console.log('bike_ids:', bike_ids);
+
+  if (!bike_ids || bike_ids.length === 0) {
+    return res.status(400).json({ error: "No bike IDs provided." });
+  }
+
+  try {
+    // Convert the bike_ids from string to ObjectId (if not already)
+    const bikeObjectIds = bike_ids.map((id) => new mongoose.Types.ObjectId(id));
+
+    // Find bids where the bike field matches any of the bike_ids
+    const bids = await Bid.find({ bike: { $in: bikeObjectIds } });
+
+    if (!bids || bids.length === 0) {
+      return res.status(404).json({ error: "No bids found for the specified bikes." });
+    }
+
+    return res.status(200).json({ bids });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error." });
+  }
+};
+
+
+
 // Find the bid and populate bike details
 export const getBid = async (req, res) => {
   const { _id } = req.query;
