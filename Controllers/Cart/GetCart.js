@@ -3,9 +3,6 @@ export const getCartByUserId = async (req, res) => {
   const { userId } = req.query
   try {
     const cart = await Cart.findOne({ userId })
-      .populate('bikes.bikeId') 
-      .populate('services.serviceId') 
-
     if (!cart) {
       return res.status(404).json({ error: 'Cart not found.' })
     }

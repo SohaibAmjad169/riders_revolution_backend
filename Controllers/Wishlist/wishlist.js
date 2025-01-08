@@ -34,7 +34,7 @@ export const createWishlist = async (req, res) => {
 
 export const getAllWishlist = async (req, res) => {
   try {
-    const wishlist = await Wishlist.find().populate("bike");
+    const wishlist = await Wishlist.find()
     return res.status(200).json({ wishlist });
   } catch (error) {
     console.error(error);
@@ -46,7 +46,7 @@ export const getWishlistById = async (req, res) => {
   const { bike_id } = req.query;
 
   try {
-    const wishlist = await Wishlist.find({ bike: bike_id }).populate("bike");
+    const wishlist = await Wishlist.find({ bike: bike_id })
 
     if (!wishlist || wishlist.length === 0) {
       return res
@@ -65,7 +65,7 @@ export const getWishlistByUserEmail = async (req, res) => {
   const { email } = req.query;
 
   try {
-    const wishlist = await Wishlist.find({ userEmail: email }).populate("bike");
+    const wishlist = await Wishlist.find({ userEmail: email })
 
     if (!wishlist || wishlist.length === 0) {
       return res
@@ -92,7 +92,7 @@ export const startWishlistTimer = async (req, res) => {
     const updatedWishlist = await Wishlist.updateOne(
       { bike: new mongoose.Types.ObjectId(bikeId) },
       { $set: { timer: true, updatedAt: new Date() } },
-      { new: true }  
+      { new: true }
     );
 
     if (updatedWishlist.modifiedCount === 0) {
@@ -102,7 +102,7 @@ export const startWishlistTimer = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Timer started successfully",
-      data: updatedWishlist,  // Make sure you are sending the updated data if needed
+      data: updatedWishlist,  
     });
   } catch (error) {
     console.error(error);
