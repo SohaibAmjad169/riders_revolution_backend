@@ -4,7 +4,7 @@ const CartSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
-      ref: 'User', // Assuming there's a User schema
+      ref: 'User', 
       required: true,
     },
     bikes: [

@@ -3,6 +3,7 @@ import Service from '../../Model/ServicesModel.js'
 
 export const addServiceToCart = async (req, res) => {
   const { userId, ServiceId, quantity } = req.body
+  console.log(userId)
 
   try {
     const service = await Service.findById(ServiceId)
